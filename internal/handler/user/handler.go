@@ -1,8 +1,6 @@
 package user
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,8 +21,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		user.POST("/create", h.create)
 		user.GET("/get", h.get)
 	}
-
-	fmt.Printf("handler started")
 
 	return router
 }
