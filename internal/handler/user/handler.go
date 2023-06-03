@@ -1,6 +1,10 @@
 package user
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+)
 
 type Handler struct {
 }
@@ -19,6 +23,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		user.POST("/create", h.create)
 		user.GET("/get", h.get)
 	}
+
+	fmt.Printf("handler started")
 
 	return router
 }
