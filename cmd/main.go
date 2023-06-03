@@ -1,19 +1,25 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	userHandler "github.com/satanaroom/my-health/internal/handler/user"
-	userServer "github.com/satanaroom/my-health/internal/server/user"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	userHandler "github.com/satanaroom/my-health/internal/handler/user"
+	userServer "github.com/satanaroom/my-health/internal/server/user"
+	userService "github.com/satanaroom/my-health/internal/service/user"
 )
 
 func main() {
+	ctx := context.Background()
+
 	srv := new(userServer.Server)
 
-	handler := userHandler.NewHandler()
+	service := userService.NewService()
+	handler := userHandler.NewHandler(ctx, service)
 
 	fmt.Println("my-health app started")
 	go func() {
@@ -24,6 +30,7 @@ func main() {
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+
 	<-quit
 
 	fmt.Println("my-health app stopped")
